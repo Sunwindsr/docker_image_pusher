@@ -1,67 +1,85 @@
 # images.txt - Docker 镜像中转列表
 
+# 本文件用于定义需要通过 GitHub Actions 中转到私有镜像仓库（如阿里云容器镜像服务 ACR）的 Docker 镜像。
+# 每次 GitHub Actions 工作流运行时，会读取此文件，尝试从公共仓库（如 Docker Hub）拉取列出的镜像，
+# 然后推送到你配置的私有仓库中。
+
 # --------------------------------------------------------
-# 根据你提供的 Dockerfile 和 docker-compose.yml 提取的精确镜像
+# 1. 根据你的 Dockerfile 和 docker-compose.yml 文件提取的精确镜像
+#    这些是你的项目直接依赖的基础镜像。
 # --------------------------------------------------------
 
-# Python 后端服务的基础镜像
+# Python 后端服务 (FastAPI 应用) 的基础镜像
+# 来源: File 1 (Dockerfile) -> FROM python:3.10-slim
 python:3.10-slim
 
-# Node.js 前端服务的构建阶段基础镜像
+# Node.js 前端应用 (Angular/React) 的构建阶段基础镜像
+# 来源: File 4 (Dockerfile) -> FROM node:18
+# 额外添加了常用的 LTS 和其他主流版本，以备未来或不同项目需要。
+# 如果你不需要这些额外版本，可以删除。
 node:18
+node:lts-alpine
+node:20-alpine
 
 # Nginx 前端服务的生产阶段基础镜像
+# 来源: File 4 (Dockerfile) -> FROM nginx:alpine
+# 额外添加了你在 Nginx.md 中可能提到或常用的其他 Nginx 版本。
 nginx:alpine
+nginx:latest
+nginx:stable-alpine
 
-# 特殊的 Nginx 镜像源 (来自 frontend-ai 的 Dockerfile)
-# 注意: 如果你的 GitHub Actions Runner 无法访问 docker.m.daocloud.io，
-# 且你无法将 Dockerfile 中的 FROM 改为标准的 nginx:alpine，
-# 那么这个镜像也需要被中转。
-# 如果可以改为标准 nginx:alpine，则删除此行。
+# 特殊来源的 Nginx 镜像 (来自 File 5 的 Dockerfile)
+# 来源: File 5 (Dockerfile) -> FROM docker.m.daocloud.io/nginx:alpine
+# 注意: 这个镜像源是非 Docker Hub 的，如果你的 GitHub Actions Runner 无法直接访问，
+# 那么中转它是必要的。如果你能将 File 5 的 Dockerfile 改为标准的 `nginx:alpine`，
+# 那么可以删除此行，并调整 File 5 的 Dockerfile。
 docker.m.daocloud.io/nginx:alpine
 
 
 # --------------------------------------------------------
-# 来自你之前提供的 docker-compose.yml 的明确镜像 (保留)
+# 2. 从你之前提供的 docker-compose.yml 文件中明确提到的其他服务镜像
+#    这些是你的应用可能依赖的数据库、缓存、工作流引擎等。
 # --------------------------------------------------------
 
 # Neo4j 图数据库
+# 来源: 你的 docker-compose.yml (未提供具体文件，但之前提到过)
 neo4j:5.15-community
 
 # PostgreSQL 关系数据库
-# 你的项目使用了 15-alpine 和 14-alpine 两个版本
+# 来源: 你的 docker-compose.yml (可能根据不同服务使用了不同版本)
 postgres:15-alpine
 postgres:14-alpine
 
 # Redis 缓存
+# 来源: 你的 docker-compose.yml
 redis:7-alpine
 
 # n8n 工作流引擎
+# 来源: 你的 docker-compose.yml
 n8nio/n8n:latest
 
-# Nginx 反向代理 (来自 Nginx.md 文档，如果和上面的 nginx:alpine 功能重复可以删除)
-# 考虑到你可能也使用稳定版本，可以额外添加
-nginx:latest
-nginx:stable-alpine
-
 
 # --------------------------------------------------------
-# 特定来源或复杂镜像 (保留你原有的)
+# 3. 特定来源或复杂镜像
+#    这些镜像的命名规则可能比较特殊，或者需要处理平台差异。
 # --------------------------------------------------------
 
-# 支持私库或非 Docker Hub 镜像 (来自 k8s.gcr.io)
+# Kubernetes 状态指标工具 (来自 k8s.gcr.io)
+# 来源: 你之前提供的列表
+# 注意: 这种带多层路径的镜像，在推送到阿里云后，仓库名称可能会被处理成
+# `k8s.gcr.io_kube-state-metrics_kube-state-metrics` 或其他简化形式。
+# 请务必在阿里云控制台确认其最终的仓库名称，以便在你的部署配置中正确引用。
 k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.0.0
 
-# 来自 Docker Hub 的特定用户/组织下的镜像 (例如 alist 文件列表程序)
+# Alist 文件列表程序 (来自 Docker Hub 特定用户/组织)
+# 来源: 你之前提供的列表
+# 注意: 这种 `user/repo` 形式的镜像，在阿里云通常会变为 `user_repo`。
 xhofe/alist:latest
 
-# 支持指定架构的镜像 (例如 alist 的 arm64 版本)
+# Alist 文件列表程序的 ARM64 架构版本
+# 来源: 你之前提供的列表 (带有 --platform 参数)
+# 注意: 带有 `--platform` 参数的镜像中转后，在阿里云仓库中可能会作为
+# `xhofe_alist` 仓库下的一个带有特定后缀的标签 (如 `latest-linux-arm64`)，
+# 或者被创建为一个独立的仓库 (如 `linux_arm64_alist`)。
+# 请务必在阿里云控制台确认其最终的仓库名称和标签，以便在你的部署配置中正确引用。
 --platform=linux/arm64 xhofe/alist:latest
-
-# --------------------------------------------------------
-# 补充说明
-# --------------------------------------------------------
-# - 请务必确认 `docker.m.daocloud.io/nginx:alpine` 是否是必须的。
-#   如果可以通过更改 Dockerfile 为 `nginx:alpine` 来解决，建议那样做。
-# - 建议定期检查你的 Dockerfile 和 docker-compose.yml，
-#   确保 images.txt 中包含所有需要中转的镜像。

@@ -5,6 +5,18 @@
 # 然后推送到你配置的私有仓库中。
 
 # --------------------------------------------------------
+# 重要提示:
+# 1. 精确性: 请确保这里列出的镜像标签与你的 Dockerfile、docker-compose.yml
+#    或其他配置文件中使用的完全一致，以避免版本不匹配问题。
+# 2. 私有仓库命名: 推送到私有仓库后，其仓库名称和标签可能会因为 Docker Registry
+#    的规则（如 '/' 会被替换为 '_'）而有所变化。请务必在私有仓库（如阿里云 ACR）
+#    控制台确认最终的名称和标签，以便在你的部署配置中正确引用。
+# 3. 平台差异: 带有 --platform 参数的镜像，在私有仓库中可能会以特殊标签形式存在，
+#    务必确认。
+# --------------------------------------------------------
+
+
+# --------------------------------------------------------
 # 1. 根据你的 Dockerfile 和 docker-compose.yml 文件提取的精确镜像
 #    这些是你的项目直接依赖的基础镜像。
 # --------------------------------------------------------
@@ -12,6 +24,8 @@
 # Python 后端服务 (FastAPI 应用) 的基础镜像
 # 来源: File 1 (Dockerfile) -> FROM python:3.10-slim
 python:3.10-slim
+# 新增: 根据需求添加的 Python 3.11 版本
+python:3.11-slim
 
 # Node.js 前端应用 (Angular/React) 的构建阶段基础镜像
 # 来源: File 4 (Dockerfile) -> FROM node:18
@@ -20,6 +34,8 @@ python:3.10-slim
 node:18
 node:lts-alpine
 node:20-alpine
+# 新增: 根据需求添加的 Node.js 18 Alpine 版本
+node:18-alpine
 
 # Nginx 前端服务的生产阶段基础镜像
 # 来源: File 4 (Dockerfile) -> FROM nginx:alpine
@@ -42,16 +58,19 @@ docker.m.daocloud.io/nginx:alpine
 # --------------------------------------------------------
 
 # Neo4j 图数据库
-# 来源: 你的 docker-compose.yml (未提供具体文件，但之前提到过)
+# 来源: 你的 docker-compose.yml
+# 新增: 根据需求添加的 Neo4j 5.15 Community 版本
 neo4j:5.15-community
 
 # PostgreSQL 关系数据库
-# 来源: 你的 docker-compose.yml (可能根据不同服务使用了不同版本)
+# 来源: 你的 docker-compose.yml
+# 新增: 根据需求添加的 PostgreSQL 15 Alpine 版本
 postgres:15-alpine
 postgres:14-alpine
 
 # Redis 缓存
 # 来源: 你的 docker-compose.yml
+# 新增: 根据需求添加的 Redis 7 Alpine 版本
 redis:7-alpine
 
 # n8n 工作流引擎

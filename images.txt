@@ -21,6 +21,9 @@
 #    这些是你的项目直接依赖的基础镜像。
 # --------------------------------------------------------
 
+# Neo4j
+neo4j:5.15-community
+
 # Python 后端服务 (FastAPI 应用) 的基础镜像
 # 来源: File 1 (Dockerfile) -> FROM python:3.10-slim
 python:3.10-slim

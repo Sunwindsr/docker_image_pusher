@@ -21,9 +21,6 @@
 #    这些是你的项目直接依赖的基础镜像。
 # --------------------------------------------------------
 
-# --- 新增 AutoGen Studio 镜像 ---
-microsoft/autogenstudio:latest
-
 # Neo4j
 neo4j:5.15-community
 

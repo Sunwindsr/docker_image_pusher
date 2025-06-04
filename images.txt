@@ -25,10 +25,14 @@
 neo4j:5.15-community
 
 # Python 后端服务 (FastAPI 应用) 的基础镜像
+python:3.12-slim
+python:3.12
+python:3.11-slim
+python:3.11
+
 # 来源: File 1 (Dockerfile) -> FROM python:3.10-slim
 python:3.10-slim
-# 新增: 根据需求添加的 Python 3.11 版本
-python:3.11-slim
+python:3.10
 
 # Node.js 前端应用 (Angular/React) 的构建阶段基础镜像
 # 来源: File 4 (Dockerfile) -> FROM node:18

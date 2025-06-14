@@ -81,13 +81,33 @@ postgres:14-alpine
 # 新增: 根据需求添加的 Redis 7 Alpine 版本
 redis:7-alpine
 
+# Kong API Gateway
+# 来源: 你的 docker-compose.yml - Kong API Gateway 服务和数据库迁移
+# Kong 是一个云原生 API 网关，用于管理微服务 API
+kong:3.4
+
 # n8n 工作流引擎
 # 来源: 你的 docker-compose.yml
 n8nio/n8n:latest
 
+# --------------------------------------------------------
+# 3. 监控和可视化工具镜像
+#    这些镜像用于应用监控、指标收集和数据可视化。
+# --------------------------------------------------------
+
+# Prometheus 监控系统
+# 来源: 你的 docker-compose.yml - Prometheus 监控服务
+# Prometheus 是开源的系统监控和告警工具
+prom/prometheus:latest
+
+# Grafana 数据可视化平台
+# 来源: 你的 docker-compose.yml - Grafana 可视化服务
+# Grafana 是开源的监控数据可视化和分析平台
+grafana/grafana:latest
+
 
 # --------------------------------------------------------
-# 3. 特定来源或复杂镜像
+# 4. 特定来源或复杂镜像
 #    这些镜像的命名规则可能比较特殊，或者需要处理平台差异。
 # --------------------------------------------------------
 

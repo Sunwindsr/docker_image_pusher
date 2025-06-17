@@ -85,7 +85,7 @@ redis:7-alpine
 # 来源: 你的 docker-compose.yml - Kong API Gateway 服务和数据库迁移
 # Kong 是一个云原生 API 网关，用于管理微服务 API
 kong:3.4
-kong:3.4.0-alpine
+kong:3.4-alpine
 
 # n8n 工作流引擎
 # 来源: 你的 docker-compose.yml

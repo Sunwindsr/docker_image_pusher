@@ -90,9 +90,7 @@ kong:3.4
 # 来源: https://github.com/Kong/kong/releases
 kong:3.9.1
 kong:3.9.0
-kong:3.8.1
 kong:3.8.0
-kong:3.7.1
 
 # Kong LTS (长期支持) 版本
 kong:2.8.5

@@ -89,18 +89,13 @@ kong:3.4
 # Kong 最新版本和稳定版本
 # 来源: https://github.com/Kong/kong/releases
 kong:3.9.1
-kong:3.9.1-alpine
 kong:3.9.0
-kong:3.9.0-alpine
 kong:3.8.1
-kong:3.8.1-alpine
 kong:3.8.0
 kong:3.7.1
-kong:3.7.1-alpine
 
 # Kong LTS (长期支持) 版本
 kong:2.8.5
-kong:2.8.5-alpine
 
 # n8n 工作流引擎
 # 来源: 你的 docker-compose.yml

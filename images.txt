@@ -15,37 +15,6 @@
 #    务必确认。
 # --------------------------------------------------------
 
-# --------------------------------------------------------
-# BM项目专用镜像 - Business Management 系统
-# 这些镜像来自 BM 项目的 Docker 配置文件 (.NET Core 3.1 + Angular 7 + SQL Server + Neo4j)
-# --------------------------------------------------------
-
-# .NET Core 3.1 ASP.NET 运行时 - BM后端基础镜像
-# 来源: BM/Dockerfile -> FROM crpi-npc1fs33u4znef6o.cn-hangzhou.personal.cr.aliyuncs.com/dgate_personal/dotnet:3.1-aspnet
-# 公共镜像源备份，用于替代阿里云私有镜像源
-mcr.microsoft.com/dotnet/aspnet:3.1
-mcr.microsoft.com/dotnet/aspnet:3.1-alpine
-
-# Node.js 16 Alpine - BM前端构建阶段
-# 来源: BM/docker/frontend.Dockerfile -> FROM node:16-alpine as build
-node:16-alpine
-
-# Nginx Alpine - BM前端运行阶段  
-# 来源: BM/docker/frontend.Dockerfile -> FROM nginx:alpine
-nginx:alpine
-
-# SQL Server 2019 - BM关系数据库
-# 来源: BM/docker-compose.yml -> mcr.microsoft.com/mssql/server:2019-latest
-mcr.microsoft.com/mssql/server:2019-latest
-
-# Neo4j 5.13 Community - BM图数据库
-# 来源: BM/docker-compose.yml -> neo4j:5.13-community
-neo4j:5.13-community
-
-# --------------------------------------------------------
-# 通用基础镜像
-# --------------------------------------------------------
-
 minio/minio:latest
 
 # --------------------------------------------------------
@@ -55,6 +24,14 @@ minio/minio:latest
 
 # Neo4j
 neo4j:5.15-community
+neo4j:5.13-community
+
+# .NET Core 3.1 ASP.NET 运行时 - BM项目后端
+mcr.microsoft.com/dotnet/aspnet:3.1
+mcr.microsoft.com/dotnet/aspnet:3.1-alpine
+
+# SQL Server 2019 - BM项目数据库
+mcr.microsoft.com/mssql/server:2019-latest
 
 # Python 后端服务 (FastAPI 应用) 的基础镜像
 python:3.12-slim
@@ -75,10 +52,13 @@ node:lts-alpine
 node:20-alpine
 # 新增: 根据需求添加的 Node.js 18 Alpine 版本
 node:18-alpine
+# BM项目前端构建
+node:16-alpine
 
 # Nginx 前端服务的生产阶段基础镜像
 # 来源: File 4 (Dockerfile) -> FROM nginx:alpine
 # 额外添加了你在 Nginx.md 中可能提到或常用的其他 Nginx 版本。
+nginx:alpine
 nginx:latest
 nginx:stable-alpine
 
@@ -94,6 +74,11 @@ docker.m.daocloud.io/nginx:alpine
 # 2. 从你之前提供的 docker-compose.yml 文件中明确提到的其他服务镜像
 #    这些是你的应用可能依赖的数据库、缓存、工作流引擎等。
 # --------------------------------------------------------
+
+# Neo4j 图数据库
+# 来源: 你的 docker-compose.yml
+# 新增: 根据需求添加的 Neo4j 5.15 Community 版本
+neo4j:5.15-community
 
 # PostgreSQL 关系数据库
 # 来源: 你的 docker-compose.yml
@@ -114,11 +99,18 @@ kong:3.4
 # Kong 最新版本和稳定版本
 # 来源: https://github.com/Kong/kong/releases
 kong:3.9.1
+kong:3.9.1-alpine
 kong:3.9.0
+kong:3.9.0-alpine
+kong:3.8.1
+kong:3.8.1-alpine
 kong:3.8.0
+kong:3.7.1
+kong:3.7.1-alpine
 
 # Kong LTS (长期支持) 版本
 kong:2.8.5
+kong:2.8.5-alpine
 
 # n8n 工作流引擎
 # 来源: 你的 docker-compose.yml
@@ -159,6 +151,8 @@ xhofe/alist:latest
 
 # Alist 文件列表程序的 ARM64 架构版本
 # 来源: 你之前提供的列表 (带有 --platform 参数)
-# 注意: GitHub Actions无法直接处理--platform参数格式的镜像条目
-# 如果需要特定架构的镜像，请在GitHub Actions工作流中单独处理
-# --platform=linux/arm64 xhofe/alist:latest
+# 注意: 带有 `--platform` 参数的镜像中转后，在阿里云仓库中可能会作为
+# `xhofe_alist` 仓库下的一个带有特定后缀的标签 (如 `latest-linux-arm64`)，
+# 或者被创建为一个独立的仓库 (如 `linux_arm64_alist`)。
+# 请务必在阿里云控制台确认其最终的仓库名称和标签，以便在你的部署配置中正确引用。
+--platform=linux/arm64 xhofe/alist:latest

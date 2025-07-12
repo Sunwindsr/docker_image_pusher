@@ -15,6 +15,37 @@
 #    务必确认。
 # --------------------------------------------------------
 
+# --------------------------------------------------------
+# BM项目专用镜像 - Business Management 系统
+# 这些镜像来自 BM 项目的 Docker 配置文件 (.NET Core 3.1 + Angular 7 + SQL Server + Neo4j)
+# --------------------------------------------------------
+
+# .NET Core 3.1 ASP.NET 运行时 - BM后端基础镜像
+# 来源: BM/Dockerfile -> FROM crpi-npc1fs33u4znef6o.cn-hangzhou.personal.cr.aliyuncs.com/dgate_personal/dotnet:3.1-aspnet
+# 公共镜像源备份，用于替代阿里云私有镜像源
+mcr.microsoft.com/dotnet/aspnet:3.1
+mcr.microsoft.com/dotnet/aspnet:3.1-alpine
+
+# Node.js 16 Alpine - BM前端构建阶段
+# 来源: BM/docker/frontend.Dockerfile -> FROM node:16-alpine as build
+node:16-alpine
+
+# Nginx Alpine - BM前端运行阶段  
+# 来源: BM/docker/frontend.Dockerfile -> FROM nginx:alpine
+nginx:alpine
+
+# SQL Server 2019 - BM关系数据库
+# 来源: BM/docker-compose.yml -> mcr.microsoft.com/mssql/server:2019-latest
+mcr.microsoft.com/mssql/server:2019-latest
+
+# Neo4j 5.13 Community - BM图数据库
+# 来源: BM/docker-compose.yml -> neo4j:5.13-community
+neo4j:5.13-community
+
+# --------------------------------------------------------
+# 通用基础镜像
+# --------------------------------------------------------
+
 minio/minio:latest
 
 # --------------------------------------------------------
@@ -48,7 +79,6 @@ node:18-alpine
 # Nginx 前端服务的生产阶段基础镜像
 # 来源: File 4 (Dockerfile) -> FROM nginx:alpine
 # 额外添加了你在 Nginx.md 中可能提到或常用的其他 Nginx 版本。
-nginx:alpine
 nginx:latest
 nginx:stable-alpine
 

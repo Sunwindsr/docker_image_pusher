@@ -24,6 +24,14 @@ minio/minio:latest
 
 # Neo4j
 neo4j:5.15-community
+neo4j:5.13-community
+
+# .NET Core 3.1 ASP.NET 运行时 - BM项目后端
+mcr.microsoft.com/dotnet/aspnet:3.1
+mcr.microsoft.com/dotnet/aspnet:3.1-alpine
+
+# SQL Server 2019 - BM项目数据库
+mcr.microsoft.com/mssql/server:2019-latest
 
 # Python 后端服务 (FastAPI 应用) 的基础镜像
 python:3.12-slim
@@ -44,6 +52,8 @@ node:lts-alpine
 node:20-alpine
 # 新增: 根据需求添加的 Node.js 18 Alpine 版本
 node:18-alpine
+# BM项目前端构建
+node:16-alpine
 
 # Nginx 前端服务的生产阶段基础镜像
 # 来源: File 4 (Dockerfile) -> FROM nginx:alpine
@@ -138,4 +148,4 @@ xhofe/alist:latest
 # `xhofe_alist` 仓库下的一个带有特定后缀的标签 (如 `latest-linux-arm64`)，
 # 或者被创建为一个独立的仓库 (如 `linux_arm64_alist`)。
 # 请务必在阿里云控制台确认其最终的仓库名称和标签，以便在你的部署配置中正确引用。
---platform=linux/arm64 xhofe/alist:latest
+# --platform=linux/arm64 xhofe/alist:latest

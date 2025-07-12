@@ -69,7 +69,6 @@ nginx:stable-alpine
 # 那么可以删除此行，并调整 File 5 的 Dockerfile。
 docker.m.daocloud.io/nginx:alpine
 
-
 # --------------------------------------------------------
 # 2. 从你之前提供的 docker-compose.yml 文件中明确提到的其他服务镜像
 #    这些是你的应用可能依赖的数据库、缓存、工作流引擎等。
@@ -123,7 +122,6 @@ prom/prometheus:latest
 # 来源: 你的 docker-compose.yml - Grafana 可视化服务
 # Grafana 是开源的监控数据可视化和分析平台
 grafana/grafana:latest
-
 
 # --------------------------------------------------------
 # 4. 特定来源或复杂镜像

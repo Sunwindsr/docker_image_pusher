@@ -69,6 +69,7 @@ jobs:
             fi
             
             # 获取镜像的完整名称，例如kasmweb/nginx:1.25.3（命名空间/镜像名:版本号）
+            # 对于带有 --platform 参数的行，需要取最后一个参数作为镜像名
             image=$(echo "$line" | awk '{print $NF}')
             # 将@sha256:等字符删除
             image="${image%%@*}"
@@ -106,9 +107,21 @@ jobs:
                 continue
             fi
         
-            echo "docker pull $line"
-            docker pull $line
-            platform=$(echo "$line" | awk -F'--platform[ =]' '{if (NF>1) print $2}' | awk '{print $1}')
+            # 检查是否包含 --platform 参数
+            if echo "$line" | grep -q '^\s*--platform'; then
+                # 解析平台参数和镜像名称
+                platform=$(echo "$line" | awk -F'--platform[ =]' '{if (NF>1) print $2}' | awk '{print $1}')
+                image=$(echo "$line" | awk '{print $NF}')
+                echo "docker pull --platform=$platform $image"
+                docker pull --platform=$platform $image
+            else
+                # 没有平台参数，直接拉取
+                platform=""
+                image="$line"
+                echo "docker pull $image"
+                docker pull $image
+            fi
+            
             echo "platform is $platform"
             # 如果存在架构信息 将架构信息拼到镜像名称前面
             if [ -z "$platform" ]; then
@@ -118,7 +131,8 @@ jobs:
             fi
             echo "platform_prefix is $platform_prefix"
             # 获取镜像的完整名称，例如kasmweb/nginx:1.25.3（命名空间/镜像名:版本号）
-            image=$(echo "$line" | awk '{print $NF}')
+            # 这里image已经在上面正确解析了，不需要再次解析
+            image="${image%%@*}"
 
             # 获取 镜像名:版本号  例如nginx:1.25.3
             image_name_tag=$(echo "$image" | awk -F'/' '{print $NF}')

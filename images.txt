@@ -12,11 +12,14 @@
 # 3. 平台差异: 带有 --platform 参数的镜像，在私有仓库中可能会以特殊标签形式存在，
 #    务必确认。
 # --------------------------------------------------------
-minio/minio:latest
-# --------------------------------------------------------
 # 1. 根据你的 Dockerfile 和 docker-compose.yml 文件提取的精确镜像
 #    这些是你的项目直接依赖的基础镜像。
 # --------------------------------------------------------
+
+# Start with reliable, commonly accessible images first
+# Nginx 前端服务的生产阶段基础镜像 - moved to front for reliability
+nginx:alpine
+
 # Neo4j
 neo4j:5.15-community
 neo4j:5.13-community
@@ -87,6 +90,11 @@ kong:2.8.5
 # n8n 工作流引擎
 # 来源: 你的 docker-compose.yml
 n8nio/n8n:latest
+
+# MinIO 对象存储服务
+# 来源: 通用存储解决方案
+minio/minio:latest
+
 # --------------------------------------------------------
 # 3. 监控和可视化工具镜像
 #    这些镜像用于应用监控、指标收集和数据可视化。

@@ -108,7 +108,7 @@ jobs:
             fi
         
             # 检查是否包含 --platform 参数
-            if echo "$line" | grep -q '^\s*--platform'; then
+            if echo "$line" | grep -q '^[[:space:]]*--platform'; then
                 # 解析平台参数和镜像名称
                 platform=$(echo "$line" | awk -F'--platform[ =]' '{if (NF>1) print $2}' | awk '{print $1}')
                 image=$(echo "$line" | awk '{print $NF}')

@@ -116,11 +116,11 @@ k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.0.0
 # Alist 文件列表程序 (来自 Docker Hub 特定用户/组织)
 # 来源: 你之前提供的列表
 # 注意: 这种 `user/repo` 形式的镜像，在阿里云通常会变为 `user_repo`。
-# xhofe/alist:latest
+xhofe/alist:latest
 # Alist 文件列表程序的 ARM64 架构版本
 # 来源: 你之前提供的列表 (带有 --platform 参数)
 # 注意: 带有 `--platform` 参数的镜像中转后，在阿里云仓库中可能会作为
 # `xhofe_alist` 仓库下的一个带有特定后缀的标签 (如 `latest-linux-arm64`)，
 # 或者被创建为一个独立的仓库 (如 `linux_arm64_alist`)。
 # 请务必在阿里云控制台确认其最终的仓库名称和标签，以便在你的部署配置中正确引用。
-# --platform=linux/arm64 xhofe/alist:latest
+--platform=linux/arm64 xhofe/alist:latest

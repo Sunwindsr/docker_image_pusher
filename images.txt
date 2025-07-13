@@ -1,9 +1,7 @@
 # images.txt - Docker 镜像中转列表
-
 # 本文件用于定义需要通过 GitHub Actions 中转到私有镜像仓库（如阿里云容器镜像服务 ACR）的 Docker 镜像。
 # 每次 GitHub Actions 工作流运行时，会读取此文件，尝试从公共仓库（如 Docker Hub）拉取列出的镜像，
 # 然后推送到你配置的私有仓库中。
-
 # --------------------------------------------------------
 # 重要提示:
 # 1. 精确性: 请确保这里列出的镜像标签与你的 Dockerfile、docker-compose.yml
@@ -14,35 +12,27 @@
 # 3. 平台差异: 带有 --platform 参数的镜像，在私有仓库中可能会以特殊标签形式存在，
 #    务必确认。
 # --------------------------------------------------------
-
 minio/minio:latest
-
 # --------------------------------------------------------
 # 1. 根据你的 Dockerfile 和 docker-compose.yml 文件提取的精确镜像
 #    这些是你的项目直接依赖的基础镜像。
 # --------------------------------------------------------
-
 # Neo4j
 neo4j:5.15-community
 neo4j:5.13-community
-
 # .NET Core 3.1 ASP.NET 运行时 - BM项目后端
 mcr.microsoft.com/dotnet/aspnet:3.1
 mcr.microsoft.com/dotnet/aspnet:3.1-alpine
-
 # SQL Server 2019 - BM项目数据库
 mcr.microsoft.com/mssql/server:2019-latest
-
 # Python 后端服务 (FastAPI 应用) 的基础镜像
 python:3.12-slim
 python:3.12
 python:3.11-slim
 python:3.11
-
 # 来源: File 1 (Dockerfile) -> FROM python:3.10-slim
 python:3.10-slim
 python:3.10
-
 # Node.js 前端应用 (Angular/React) 的构建阶段基础镜像
 # 来源: File 4 (Dockerfile) -> FROM node:18
 # 额外添加了常用的 LTS 和其他主流版本，以备未来或不同项目需要。
@@ -54,92 +44,75 @@ node:20-alpine
 node:18-alpine
 # BM项目前端构建
 node:16-alpine
-
 # Nginx 前端服务的生产阶段基础镜像
 # 来源: File 4 (Dockerfile) -> FROM nginx:alpine
 # 额外添加了你在 Nginx.md 中可能提到或常用的其他 Nginx 版本。
 nginx:alpine
 nginx:latest
 nginx:stable-alpine
-
 # 特殊来源的 Nginx 镜像 (来自 File 5 的 Dockerfile)
 # 来源: File 5 (Dockerfile) -> FROM docker.m.daocloud.io/nginx:alpine
 # 注意: 这个镜像源是非 Docker Hub 的，如果你的 GitHub Actions Runner 无法直接访问，
 # 那么中转它是必要的。如果你能将 File 5 的 Dockerfile 改为标准的 `nginx:alpine`，
 # 那么可以删除此行，并调整 File 5 的 Dockerfile。
 docker.m.daocloud.io/nginx:alpine
-
 # --------------------------------------------------------
 # 2. 从你之前提供的 docker-compose.yml 文件中明确提到的其他服务镜像
 #    这些是你的应用可能依赖的数据库、缓存、工作流引擎等。
 # --------------------------------------------------------
-
 # Neo4j 图数据库
 # 来源: 你的 docker-compose.yml
 # 新增: 根据需求添加的 Neo4j 5.15 Community 版本
 neo4j:5.15-community
-
 # PostgreSQL 关系数据库
 # 来源: 你的 docker-compose.yml
 # 新增: 根据需求添加的 PostgreSQL 15 Alpine 版本
 postgres:15-alpine
 postgres:14-alpine
-
 # Redis 缓存
 # 来源: 你的 docker-compose.yml
 # 新增: 根据需求添加的 Redis 7 Alpine 版本
 redis:7-alpine
-
 # Kong API Gateway
 # 来源: 你的 docker-compose.yml - Kong API Gateway 服务和数据库迁移
 # Kong 是一个云原生 API 网关，用于管理微服务 API
 kong:3.4
-
 # Kong 最新版本和稳定版本
 # 来源: https://github.com/Kong/kong/releases
 kong:3.9.1
 kong:3.9.0
 kong:3.8.0
-
 # Kong LTS (长期支持) 版本
 kong:2.8.5
-
 # n8n 工作流引擎
 # 来源: 你的 docker-compose.yml
 n8nio/n8n:latest
-
 # --------------------------------------------------------
 # 3. 监控和可视化工具镜像
 #    这些镜像用于应用监控、指标收集和数据可视化。
 # --------------------------------------------------------
-
 # Prometheus 监控系统
 # 来源: 你的 docker-compose.yml - Prometheus 监控服务
 # Prometheus 是开源的系统监控和告警工具
 prom/prometheus:latest
-
 # Grafana 数据可视化平台
 # 来源: 你的 docker-compose.yml - Grafana 可视化服务
 # Grafana 是开源的监控数据可视化和分析平台
 grafana/grafana:latest
-
 # --------------------------------------------------------
 # 4. 特定来源或复杂镜像
 #    这些镜像的命名规则可能比较特殊，或者需要处理平台差异。
 # --------------------------------------------------------
-
 # Kubernetes 状态指标工具 (来自 k8s.gcr.io)
 # 来源: 你之前提供的列表
 # 注意: 这种带多层路径的镜像，在推送到阿里云后，仓库名称可能会被处理成
 # `k8s.gcr.io_kube-state-metrics_kube-state-metrics` 或其他简化形式。
 # 请务必在阿里云控制台确认其最终的仓库名称，以便在你的部署配置中正确引用。
 k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.0.0
-
 # Alist 文件列表程序 (来自 Docker Hub 特定用户/组织)
 # 来源: 你之前提供的列表
 # 注意: 这种 `user/repo` 形式的镜像，在阿里云通常会变为 `user_repo`。
 xhofe/alist:latest
-
 # Alist 文件列表程序的 ARM64 架构版本
 # 来源: 你之前提供的列表 (带有 --platform 参数)
 # 注意: 带有 `--platform` 参数的镜像中转后，在阿里云仓库中可能会作为

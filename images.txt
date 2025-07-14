@@ -21,6 +21,9 @@ nginx:alpine
 # Neo4j
 neo4j:5.15-community
 neo4j:5.13-community
+# .NET Core 3.1 SDK - BM项目构建阶段
+mcr.microsoft.com/dotnet/sdk:3.1
+mcr.microsoft.com/dotnet/sdk:3.1-alpine
 # .NET Core 3.1 ASP.NET 运行时 - BM项目后端
 mcr.microsoft.com/dotnet/aspnet:3.1
 mcr.microsoft.com/dotnet/aspnet:3.1-alpine

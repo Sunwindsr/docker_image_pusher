@@ -24,8 +24,13 @@ neo4j:5.13-community
 # .NET Core 3.1 ASP.NET 运行时 - BM项目后端
 mcr.microsoft.com/dotnet/aspnet:3.1
 mcr.microsoft.com/dotnet/aspnet:3.1-alpine
-# SQL Server 2019 - BM项目数据库
+# SQL Server - BM项目数据库 (免费Express版本)
+mcr.microsoft.com/mssql/server:2022-latest
 mcr.microsoft.com/mssql/server:2019-latest
+# SQL Server 2022 Express - 完全免费，适合中小企业
+mcr.microsoft.com/mssql/server:2022-preview-ubuntu-22.04
+# SQL Server 历史版本支持
+mcr.microsoft.com/mssql/server:2017-latest
 # Python 后端服务 (FastAPI 应用) 的基础镜像
 python:3.12-slim
 python:3.12

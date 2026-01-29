@@ -56,9 +56,25 @@ python:3.10
 # Node 12.x - Angular 7 需要 (Angular 7 支持 Node 8.9-12.x)
 node:12
 node:12-alpine
+
+# Node 14.x - Angular 12 需要 (Angular 12 支持 Node 12.14-14.x)
+node:14
+node:14-alpine
+
+# Node 16.x - LTS 版本 (2022-04-30 至 2023-04-30, 2023-09-26 转 Maintenance)
+node:16
+node:16-alpine
+
+# Node 18.x - LTS 版本 (2022-04-25 至 2025-04-30)
 node:18
 node:18-alpine
+
+# Node 20.x - LTS 版本 (Current LTS, 2023-10-24 至 2026-04-30)
+node:20
 node:20-alpine
+
+# Node LTS - 始终指向最新 LTS 版本
+node:lts
 node:lts-alpine
 
 # -----------------------------------------------------------------------------

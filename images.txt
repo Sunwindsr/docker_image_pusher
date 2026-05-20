@@ -55,6 +55,7 @@ python:3.10
 # -----------------------------------------------------------------------------
 node:18
 node:18-alpine
+node:18-slim
 node:20-alpine
 node:lts-alpine
 

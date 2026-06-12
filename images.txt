@@ -2,7 +2,7 @@
 # Docker 镜像中转列表
 # =============================================================================
 # 本文件用于定义需要通过 GitHub Actions 中转到私有镜像仓库的 Docker 镜像
-# 每次工作流运行时，会从公共仓库拉取列出的镜像，然后推送到配置的私有仓库中
+# 每次工作流运行时，会从公共仓库拉取列出的镜像,然后推送到配置的私有仓库中
 # =============================================================================
 
 # -----------------------------------------------------------------------------
@@ -21,110 +21,153 @@
 # -----------------------------------------------------------------------------
 # .NET 8 SDK - BM项目构建阶段
 mcr.microsoft.com/dotnet/sdk:8.0
+--platform=linux/arm64 mcr.microsoft.com/dotnet/sdk:8.0
 
 # .NET 8 ASP.NET 运行时 - BM项目后端
 mcr.microsoft.com/dotnet/aspnet:8.0
+--platform=linux/arm64 mcr.microsoft.com/dotnet/aspnet:8.0
 
 # SQL Server 2022 Express - BM项目数据库
+# ⚠️ 注意: SQL Server 可能不支持 ARM64 架构
 mcr.microsoft.com/mssql/server:2022-latest
+--platform=linux/arm64 mcr.microsoft.com/mssql/server:2022-latest
 
 # Neo4j 5.15 Community - BM项目图数据库
 neo4j:5.15-community
+--platform=linux/arm64 neo4j:5.15-community
 
 # -----------------------------------------------------------------------------
 # 🌐 Web 服务器 & 反向代理
 # -----------------------------------------------------------------------------
 nginx:alpine
+--platform=linux/arm64 nginx:alpine
 nginx:latest
+--platform=linux/arm64 nginx:latest
 nginx:stable-alpine
+--platform=linux/arm64 nginx:stable-alpine
 docker.m.daocloud.io/nginx:alpine
+--platform=linux/arm64 docker.m.daocloud.io/nginx:alpine
 
 # -----------------------------------------------------------------------------
 # 🐍 Python 运行时
 # Python 后端服务 (FastAPI 应用) 的基础镜像
 # -----------------------------------------------------------------------------
 python:3.12-slim
+--platform=linux/arm64 python:3.12-slim
 python:3.12
+--platform=linux/arm64 python:3.12
 python:3.11-slim
+--platform=linux/arm64 python:3.11-slim
 python:3.11
+--platform=linux/arm64 python:3.11
 python:3.10-slim
+--platform=linux/arm64 python:3.10-slim
 python:3.10
+--platform=linux/arm64 python:3.10
 
 # -----------------------------------------------------------------------------
 # 🟢 Node.js 运行时
 # -----------------------------------------------------------------------------
 # Node 12.x - Angular 7 需要 (Angular 7 支持 Node 8.9-12.x)
 node:12
+--platform=linux/arm64 node:12
 node:12-alpine
+--platform=linux/arm64 node:12-alpine
 
 # Node 14.x - Angular 12 需要 (Angular 12 支持 Node 12.14-14.x)
 node:14
+--platform=linux/arm64 node:14
 node:14-alpine
+--platform=linux/arm64 node:14-alpine
 
 # Node 16.x - LTS 版本 (2022-04-30 至 2023-04-30, 2023-09-26 转 Maintenance)
 node:16
+--platform=linux/arm64 node:16
 node:16-alpine
+--platform=linux/arm64 node:16-alpine
 
 # Node 18.x - LTS 版本 (2022-04-25 至 2025-04-30)
 node:18
+--platform=linux/arm64 node:18
 node:18-alpine
+--platform=linux/arm64 node:18-alpine
 node:18-slim
+--platform=linux/arm64 node:18-slim
 
 # Node 20.x - LTS 版本 (Current LTS, 2023-10-24 至 2026-04-30)
 node:20
+--platform=linux/arm64 node:20
 node:20-alpine
+--platform=linux/arm64 node:20-alpine
 
 # Node LTS - 始终指向最新 LTS 版本
 node:lts
+--platform=linux/arm64 node:lts
 node:lts-alpine
+--platform=linux/arm64 node:lts-alpine
 
 # -----------------------------------------------------------------------------
 # 🗄️ 数据库服务
 # -----------------------------------------------------------------------------
 # Neo4j 图数据库
 neo4j:5.15-community
+--platform=linux/arm64 neo4j:5.15-community
 neo4j:5.13-community
+--platform=linux/arm64 neo4j:5.13-community
 
 # PostgreSQL 关系数据库
 postgres:15-alpine
+--platform=linux/arm64 postgres:15-alpine
 postgres:14-alpine
+--platform=linux/arm64 postgres:14-alpine
 
 # Redis 缓存数据库
 redis:7-alpine
+--platform=linux/arm64 redis:7-alpine
 
 # -----------------------------------------------------------------------------
 # 🚪 API 网关
 # -----------------------------------------------------------------------------
 # Kong API Gateway
 kong:3.4
+--platform=linux/arm64 kong:3.4
 kong:3.9.1
+--platform=linux/arm64 kong:3.9.1
 kong:3.9.0
+--platform=linux/arm64 kong:3.9.0
 kong:3.8.0
+--platform=linux/arm64 kong:3.8.0
 kong:2.8.5
+--platform=linux/arm64 kong:2.8.5
 
 # -----------------------------------------------------------------------------
 # 🔧 工具与中间件
 # -----------------------------------------------------------------------------
 # n8n 工作流引擎
 n8nio/n8n:latest
+--platform=linux/arm64 n8nio/n8n:latest
 
 # MinIO 对象存储
 minio/minio:latest
+--platform=linux/arm64 minio/minio:latest
 
 # -----------------------------------------------------------------------------
 # 📊 监控与可视化
 # -----------------------------------------------------------------------------
 # Prometheus 监控系统
 prom/prometheus:latest
+--platform=linux/arm64 prom/prometheus:latest
 
 # Grafana 数据可视化
 grafana/grafana:latest
+--platform=linux/arm64 grafana/grafana:latest
 
 # -----------------------------------------------------------------------------
 # ☸️ Kubernetes 相关
 # -----------------------------------------------------------------------------
 # Kubernetes 状态指标工具
 k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.0.0
+--platform=linux/arm64 k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.0.0
 
 # -----------------------------------------------------------------------------
 # 📁 文件管理
@@ -132,7 +175,7 @@ k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.0.0
 # Alist 文件列表程序
 xhofe/alist:latest
 
-# Alist ARM64 架构版本
+# Alist ARM64 架构版本（已明确指定）
 --platform=linux/arm64 xhofe/alist:latest
 
 # =============================================================================
@@ -141,4 +184,5 @@ xhofe/alist:latest
 # 2. 私有仓库中的命名可能因规则变化（如 '/' 替换为 '_'）
 # 3. 带有 --platform 参数的镜像在私有仓库中可能使用特殊标签
 # 4. 请在私有仓库控制台确认最终的名称和标签
+# 5. ⚠️ 部分镜像（如 SQL Server）可能不支持 ARM64，使用前请验证兼容性
 # =============================================================================
